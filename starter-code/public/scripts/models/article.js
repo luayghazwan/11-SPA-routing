@@ -25,13 +25,12 @@
 
   Article.fetchAll = callback => {
     $.get('/articles')
-    .then(
-      results => {
-        if (results.length) {
-          Article.loadAll(results);
-          callback();
-        } else {
-          $.getJSON('./data/hackerIpsum.json')
+    .then(results => {
+      if (results.length) {
+        Article.loadAll(results);
+        callback();
+      } else {
+        $.getJSON('./data/hackerIpsum.json')
           .then(rawData => {
             rawData.forEach(item => {
               let article = new Article(item);
@@ -40,8 +39,8 @@
           })
           .then(() => Article.fetchAll(callback))
           .catch(console.error);
-        }
       }
+    }
     )
   };
 
